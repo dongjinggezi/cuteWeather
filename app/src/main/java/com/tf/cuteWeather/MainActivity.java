@@ -22,13 +22,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         LitePal.initialize(this);
         /*创建数据库*/
-        Button createDatabase = (Button) findViewById(R.id.create_database);
+/*        Button createDatabase = (Button) findViewById(R.id.create_database);
         createDatabase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Connector.getDatabase();
             }
-        });
+        });*/
 
     }
 }
