@@ -22,6 +22,7 @@ import com.tf.cuteWeather.R;
 import com.tf.cuteWeather.db.City;
 import com.tf.cuteWeather.db.County;
 import com.tf.cuteWeather.db.Province;
+import com.tf.cuteWeather.gson.Weather;
 import com.tf.cuteWeather.util.HttpUtil;
 import com.tf.cuteWeather.util.Utility;
 
@@ -107,10 +108,18 @@ public class ChooseAreaFragment extends Fragment {
                     queryCounties();
                 } else if (currentLevel == LEVEL_COUNTY) {
                     String weatherId = countyList.get(position).getWeatherId();
-                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
-                    intent.putExtra("weather_id", weatherId);
-                    startActivity(intent);
-                    Objects.requireNonNull(getActivity()).finish();
+                    if (getActivity() instanceof MainActivity) {
+                        Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                        intent.putExtra("weather_id", weatherId);
+                        startActivity(intent);
+                        Objects.requireNonNull(getActivity()).finish();
+                    } else if (getActivity() instanceof WeatherActivity){
+                        WeatherActivity activity = (WeatherActivity)getActivity();
+                        activity.drawerLayout.closeDrawers();
+                        activity.swipeRefresh.setRefreshing(true);
+                        activity.requestWeather(weatherId);
+                    }
+
                 }
             }
         });
